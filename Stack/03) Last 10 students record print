@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 20
+int stack[MAX_SIZE];
+int top = -1;
+
+
+int isEmpty() {
+    return top == -1;
+}
+
+int isFull() {
+    return top == MAX_SIZE - 1;
+}
+
+
+void push() {
+    int i,j,n,value;
+    
+    if (isFull()) {
+        printf("Stack is full\n");
+        return;
+    }
+    else{
+        top++;
+        printf("You have to Enter the record of more than 10 students: ");
+        scanf("%d",&n);
+        if(n>=10)
+        {
+            printf("Enter the registration number: ");
+            for(i=0;i<n;i++)
+            {
+                top++;
+                scanf("%d",&value);
+                stack[top] = value;
+                
+            }
+            printf("The last 10 Students Record is : \n");
+            for(j=top;j>top-10;j--)
+            printf("%d\n",stack[j]);
+            
+            
+        }
+        else{
+            printf("Students are less than 10 .......");
+        }
+        
+        
+    }
+}
+
+
+int pop() {
+    if (isEmpty()) {
+        printf("Stack is empty\n");
+        return -1; 
+    }
+    else{
+        return stack[top];
+        top--;
+    }
+}
+
+int main() {
+    push();
+    
+    //int lastRecord = pop();
+    
+    //printf("Last submitted record : %d\n",lastRecord);
+
+    return 0;
+}
