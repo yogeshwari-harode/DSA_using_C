@@ -1,0 +1,124 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int data;
+    struct node* next;
+};
+struct node* head;
+
+void InsertAtPosition(){
+    struct node*new_node,*temp;
+    new_node=(struct node*)malloc(sizeof(struct node));
+    int i,pos;
+    
+    if(head==NULL)
+        printf("Create List First,List is Empty\n");
+    else{
+        printf("Enter new_node data: ");
+        scanf("%d",&new_node->data);
+        printf("Enter the position : ");
+        scanf("%d",&pos);
+        
+        if(pos==1){
+            new_node->next=head;
+            head=new_node;
+        }
+        else{
+            temp=head;
+            for(i=1;i<(pos-1);i++){
+                temp=temp->next;
+                if(temp==NULL)
+                    printf("No Such position\n");
+            }
+            new_node->next=temp->next;
+            temp->next=new_node;
+        }    
+    }
+}
+    
+    
+   
+    
+
+
+
+void InsertAtEnd(){
+    struct node* new_node,* temp;
+    new_node=(struct node*)malloc(sizeof(struct node));
+    printf("Enter data : ");
+    scanf("%d",&new_node->data);
+    
+    if(head==NULL)
+        head=new_node;
+    else{
+        temp=head;
+        while(temp->next!=NULL){
+            temp=temp->next;
+        }
+        new_node->next=NULL;
+        temp->next=new_node;
+        
+    }
+}
+
+
+void InsertAtBeg(){
+    
+    struct node* new_node;
+    new_node=(struct node*)malloc(sizeof(struct node));
+    printf("Enter new node data: ");
+    scanf("%d",&new_node->data);
+    
+    if(head==NULL)
+        head=new_node;
+    else{
+        new_node->next=head;
+        head=new_node;
+    }
+    
+}
+
+void Display(){
+    if(head==NULL){
+        printf("List is Empty");
+    }
+    else{
+        struct node* temp;
+        temp=head;
+       
+        while(temp!=NULL){
+            printf("%d\n",temp->data);
+             temp=temp->next;
+        }
+        
+    }
+}
+
+
+int main(){
+    
+    int choice;
+    
+    while(1){
+    printf("1. Insert At beginning\n2. Insert At End\n3. InsertAtPosition\n4. Display\n5. Exit\n");
+    printf("Enter your choice : ");
+    scanf("%d",&choice);
+    switch(choice){
+        case 1: InsertAtBeg();
+            break;
+        case 2:InsertAtEnd();
+            break;
+        case 3:InsertAtPosition();
+            break;
+        case 4: Display();
+            break;
+        case 5: exit(0);
+            break;
+        default: printf("No such option is there\n");
+            break;
+    }
+    
+    }
+    return 0;
+}
