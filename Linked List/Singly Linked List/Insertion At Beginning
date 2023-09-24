@@ -55,7 +55,7 @@ int main(){
             break;
         case 3: exit(0);
             break;
-        default: printf("No such option is there");
+        default: printf("No such option is there\n");
             break;
     }
     
