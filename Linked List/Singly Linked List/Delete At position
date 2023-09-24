@@ -1,0 +1,101 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int data;
+    struct node* next;
+};
+struct node* head;
+
+void DeleteAtPosition(){
+    struct node*temp,*pre_temp;
+    
+    int i,pos;
+    
+    if(head==NULL)
+        printf("Create List First,List is Empty\n");
+    else{
+        printf("Enter the position : ");
+        scanf("%d",&pos);
+        
+        if(pos==1){
+            temp=head;
+            head=temp->next;
+            free(temp);
+        }
+        else{
+            temp=head;
+            for(i=1;i<pos;i++){
+                pre_temp=temp;
+                temp=temp->next;
+                if(temp==NULL){
+                    printf("No Such position\n");
+                    return;
+                }
+            }
+            pre_temp->next=temp->next;
+            free(temp);
+            temp=NULL;
+        }    
+    }
+}
+    
+void InsertAtEnd(){
+    struct node* new_node,* temp;
+    new_node=(struct node*)malloc(sizeof(struct node));
+    printf("Enter data : ");
+    scanf("%d",&new_node->data);
+    
+    if(head==NULL)
+        head=new_node;
+    else{
+        temp=head;
+        while(temp->next!=NULL){
+            temp=temp->next;
+        }
+        new_node->next=NULL;
+        temp->next=new_node;
+        
+    }
+}
+
+void Display(){
+    if(head==NULL){
+        printf("List is Empty\n");
+    }
+    else{
+        struct node* temp;
+        temp=head;
+       
+        while(temp!=NULL){
+            printf("%d\n",temp->data);
+             temp=temp->next;
+        }
+        
+    }
+}
+
+
+int main(){
+    int choice;
+    
+    while(1){
+    printf("1. Insert At End\n2. Delete At Position\n3. Display\n4. Exit\n");
+    printf("Enter your choice : ");
+    scanf("%d",&choice);
+    switch(choice){
+        case 1: InsertAtEnd();
+            break;
+        case 2:DeleteAtPosition();
+            break;
+        case 3: Display();
+            break;
+        case 4: exit(0);
+            break;
+        default: printf("No such option is there\n");
+            break;
+    }
+    
+    }
+    return 0;
+}
