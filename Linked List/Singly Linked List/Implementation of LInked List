@@ -1,0 +1,187 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node* next;
+};
+
+struct node* head,*temp,*new_node;
+
+
+
+void insertAtBeg() {
+    new_node = (struct node*)malloc(sizeof(struct node));
+    printf("Enter new node data : ");
+    scanf("%d",&new_node->data);
+    new_node->next=NULL;
+    
+    if(head==NULL){
+        head=new_node;
+    }
+    else{
+        new_node->next=head;
+        head=new_node;
+    }
+}
+
+void insertAtEnd() {
+   new_node = (struct node*)malloc(sizeof(struct node));
+    printf("Enter new node data : ");
+    scanf("%d",&new_node->data);
+    new_node->next=NULL;
+    
+    if(head==NULL){
+        head=new_node;
+    }
+    else{
+        temp=head;
+        while(temp->next!=NULL){
+            temp=temp->next;
+        }
+        temp->next=new_node;
+    }
+}
+
+void InsertAtPosition(){
+    struct node*new_node,*temp;
+    new_node=(struct node*)malloc(sizeof(struct node));
+    int i,pos;
+    
+    if(head==NULL)
+        printf("Create List First,List is Empty\n");
+    else{
+        printf("Enter new_node data: ");
+        scanf("%d",&new_node->data);
+        printf("Enter the position : ");
+        scanf("%d",&pos);
+        
+        if(pos==1){
+            new_node->next=head;
+            head=new_node;
+        }
+        else{
+            temp=head;
+            for(i=1;i<(pos-1);i++){
+                temp=temp->next;
+                if(temp==NULL)
+                    printf("No Such position\n");
+            }
+            new_node->next=temp->next;
+            temp->next=new_node;
+        }    
+    }
+}
+    
+
+
+void DeleteAtBeg(){
+    struct node* temp;
+    if(head==NULL)
+        printf("Empty List\n");
+    else{
+        temp=head;
+        head=head->next;
+        free(temp);
+    }
+}
+
+void DeleteAtEnd(){
+    struct node *pre_temp,*temp;
+    if(head==NULL)
+        printf("Empty List\n");
+    else if(head->next==NULL){
+        free(head);
+        head=NULL;
+    }
+    else{
+        temp=head;
+        while(temp->next!=NULL){
+            pre_temp=temp;
+            temp=temp->next;
+        }
+        pre_temp->next=NULL;
+        free(temp);
+        temp=NULL;
+    }
+}
+
+
+void DeleteAtPosition(){
+    struct node*temp,*pre_temp;
+    
+    int i,pos;
+    
+    if(head==NULL)
+        printf("Create List First,List is Empty\n");
+    else{
+        printf("Enter the position : ");
+        scanf("%d",&pos);
+        
+        if(pos==1){
+            temp=head;
+            head=temp->next;
+            free(temp);
+        }
+        else{
+            temp=head;
+            for(i=1;i<pos;i++){
+                pre_temp=temp;
+                temp=temp->next;
+                if(temp==NULL){
+                    printf("No Such position\n");
+                    return;
+                }
+            }
+            pre_temp->next=temp->next;
+            free(temp);
+            temp=NULL;
+        }    
+    }
+}
+
+void Display(){ 
+    temp=head;
+    if(head==NULL){
+        printf("List is empty\n");
+    }
+    else{
+        while(temp!=NULL)
+        {
+            printf("%d ",temp->data);
+            temp=temp->next;
+        }
+    }
+}
+
+int main() {
+    int choice;
+    while (1) {
+        printf("\n1. Insert At Beginning\n2. Insert At End\n3. Insert At Position\n4. Delete At Beg\n5. Delete At End\n6. Delete At Position\n7. Display\n8. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:insertAtBeg();
+                break;
+            case 2:insertAtEnd();
+                break;
+            case 3: InsertAtPosition();
+                break;
+            case 4: DeleteAtBeg();
+                break;
+            case 5: DeleteAtEnd();
+                break;
+            case 6: DeleteAtPosition();
+                break;
+            case 7: Display();
+                break;
+            case 8:
+                exit(0); 
+            default:
+                printf("Invalid choice\n");
+                break;
+        }
+    }
+    return 0;
+}
