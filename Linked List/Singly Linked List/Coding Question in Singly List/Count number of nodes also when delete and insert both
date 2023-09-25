@@ -1,0 +1,113 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node{
+    int data;
+    struct node * next;
+};
+
+struct node *head;
+
+void DeleteAtMid(){
+    struct node *temp,*pre_temp;
+    int i,pos;
+    if(head==NULL)
+        printf("Empty List\n");
+    else{
+        printf("Enter pos: ");
+        scanf("%d",&pos);
+        if(pos==1){
+            temp=head;
+            head=temp->next;
+            free(temp);
+        }
+        else{
+        temp=head;
+        for(i=1;i<pos;i++){
+            pre_temp=temp;
+            temp=temp->next;
+            if(temp==NULL){
+                printf("No such position");
+            }
+        }
+        pre_temp->next=temp->next;
+        free(temp);
+        temp=NULL;
+    }
+  }
+}
+
+void DeleteAtEnd(){
+    struct node * pre_temp,*temp;
+    if(head==NULL)
+        printf("Empty List\n");
+    else if(head->next==NULL){
+        free(head);
+        head=NULL;
+    }
+    else{
+        temp=head;
+        while(temp->next!=NULL){
+            pre_temp=temp;
+            temp=temp->next;
+        }
+        pre_temp->next=NULL;
+        free(temp);
+        temp=NULL;
+    }
+}
+
+void InsertAtEnd(){
+    struct node *new_node,*temp;
+    new_node=(struct node*)malloc(sizeof(struct node));
+    
+    printf("Enter data in new node : ");
+    scanf("%d",&new_node->data);
+   
+    if(head==NULL)
+        head=new_node;
+    else{
+        temp=head;
+        while(temp->next!=NULL){
+            temp=temp->next;
+        }
+        temp->next=new_node;
+    }
+}
+
+void Display(){
+    struct node *temp;
+    int count=0;
+    if(head==NULL){
+        printf("Empty List\n");
+    }
+    else{
+        temp=head;
+        while(temp!=NULL){
+            count++;
+            printf("%d\n",temp->data);
+            temp=temp->next;
+            
+        }   
+    }printf("count : %d\n",count);  
+}
+
+int main(){
+    int choice;
+     while(1){
+    printf("1. Create List\n2. DeleteAtMid\n3.Display\n4. Exit\n");
+    printf("Enter choice: ");
+    scanf("%d",&choice);
+   
+        switch(choice)
+        {
+            case 1: InsertAtEnd();
+                break;
+            case 2: DeleteAtMid();
+                break;
+            case 3: Display();
+                break;
+            case 4: exit(0);    
+        }
+    }       
+}
