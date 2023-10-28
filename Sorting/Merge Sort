@@ -1,85 +1,79 @@
-#include <stdio.h>
+#include<stdio.h>
 
-// Function to merge two subarrays of arr[]
-void merge(int arr[], int low, int mid, int high) {
-    int i, j, k;
-    int n1 = mid - low + 1;
-    int n2 = high - mid;
-
-    // Create temporary arrays
-    // L(left array)
-    // R(right array)
-    int L[n1], R[n2];
-
-    // Copy data to temp arrays L[] and R[]
-    for (i = 0; i < n1; i++)
-        L[i] = arr[low + i];
-    for (j = 0; j < n2; j++)
-        R[j] = arr[mid + 1 + j];
-
-    // Merge the temp arrays back into arr[low..high]
-    i = 0;
-    j = 0;
-    k = low;
-    while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
-            arr[k] = L[i];
+void Merge(int arr[],int l,int mid,int r){
+    int i,j,k;
+    int n1=mid-l+1;
+    int n2=r-mid;
+    int L[n1],R[n2];
+    
+    for(i = 0 ; i < n1 ; i++)
+        L[i]=arr[l+i];
+    for(j = 0 ; j < n2 ; j++)
+        R[j]=arr[mid+1+j];
+        
+    i=0,j=0,k=l;
+    
+    //Compare left and right subarrays which element is smaller copy to original Array 
+    //And increase its position by one then again Compare L and R Array further so on
+    while(i<n1 && j<n2){
+        if(L[i]<=R[j]){
+            arr[k]=L[i];
             i++;
-        } else {
-            arr[k] = R[j];
+        }
+        else{
+            arr[k]=R[j];
             j++;
         }
         k++;
     }
-
-    // Copy the remaining elements of L[], if there are any
-    while (i < n1) {
-        arr[k] = L[i];
+    //copy remaining elements of Left array if some remaining elements are there
+    while(i<n1){
+        arr[k]=L[i];
         i++;
         k++;
     }
-
-    // Copy the remaining elements of R[], if there are any
-    while (j < n2) {
-        arr[k] = R[j];
+    //copy remaining elements of right array if some remaining elements are there
+    while(j<n2){
+        arr[k]=R[j];
         j++;
         k++;
     }
 }
 
-// Merge Sort function
-void mergeSort(int arr[], int low, int high) {
-    if (low < high) {
-        int mid = low + (high - low) / 2;
-        mergeSort(arr, low, mid);
-        mergeSort(arr, mid + 1, high);
-        merge(arr, low, mid, high);
+//Array are divided into subarrays here
+void MergeSort(int arr[],int l,int r){
+    if(l<r){
+        int mid=l+(r-l)/2;
+        MergeSort(arr,l,mid);
+        MergeSort(arr,mid+1,r);
+        Merge(arr,l,mid,r);
     }
 }
 
-// Function to print an array
-void printArray(int arr[], int size) {
-    for (int i = 0; i < size; i++)
-        printf("%d ", arr[i]);
-}
 
-int main() {
-    int n;
 
-    printf("Enter the number of elements: ");
-    scanf("%d", &n);
-
+int main(){
+    
+    int n,i;
+    printf("Enter how many elements you wants to Enter : ");
+    scanf("%d",&n);
     int arr[n];
-
-    printf("Enter the elements:\n");
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
+    printf("Enter %d elements : ",n);
+    for(int i = 0 ; i < n ; i++){
+        scanf("%d",&arr[i]);
     }
-
-    mergeSort(arr, 0, n - 1);
-
-    printf("\nSorted array is:\n");
-    printArray(arr, n);
-
+    printf("Given array elements : \n");
+    for(i = 0 ; i < n ; i++){
+        printf("%d ",arr[i]);
+    }
+    
+    MergeSort(arr,0,n-1);
+    printf("\nSorted Elements are : \n");
+    
+    //Print after sorting array Elements
+    for(int i=0;i < n;i++){
+        printf("%d ",arr[i]);
+    }
+    
     return 0;
 }
