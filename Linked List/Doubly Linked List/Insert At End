@@ -1,0 +1,59 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+  int data;
+  struct node *prev;
+  struct node *next;
+};
+
+struct node *head,*tail;
+
+
+void insertAtEnd(){
+    int data;
+    struct node *new_node;
+    new_node=(struct node *)malloc(sizeof(struct node));
+    printf("Enter new_node data : ");
+    scanf("%d",&new_node->data);
+    new_node->prev=NULL;
+    new_node->next=NULL;
+    if(head==NULL){
+        head=new_node;
+        tail=new_node;
+    }
+    else{
+        tail->next=new_node;
+        new_node->prev=tail;
+        tail=new_node;
+    }
+}
+
+void display(){
+    struct node *temp;
+    temp=head;
+    printf("The lists is......\n");
+    while(temp!=NULL){
+        printf("%d ",temp->data);
+        temp=temp->next;
+    }
+    printf("\n");
+}
+
+int main(){
+    int choice;
+    while(1){
+        printf("1. Insert At End\n2. display\n3. Exit\n");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:insertAtEnd();
+                break;
+            case 2:display();
+                break;
+            case 3: exit(0);
+            default:printf("You Entered wrong choice....\n");
+                break;
+        }
+    }
+    return 0;
+}
