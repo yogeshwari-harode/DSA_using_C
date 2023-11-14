@@ -32,12 +32,16 @@ void insertAtBeg(){
 void display(){
     struct node *temp;
     temp=head;
-    printf("The lists is......\n");
-    while(temp!=NULL){
-        printf("%d ",temp->data);
-        temp=temp->next;
+    if(head==NULL)
+        printf("List is Empty,Create List First.\n");
+    else{
+            printf("The lists is :\n");
+            while(temp!=NULL){
+            printf("%d ",temp->data);
+            temp=temp->next;
+            }
+        printf("\n");
     }
-    printf("\n");
 }
 
 int main(){
