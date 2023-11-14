@@ -1,0 +1,91 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+  int data;
+  struct node *prev;
+  struct node *next;
+};
+
+struct node *head,*tail;
+
+void insertAtPosition(){
+    int pos;
+    struct node *new_node,*temp,*temp2;
+    new_node=(struct node *)malloc(sizeof(struct node));
+    if(head==NULL)
+        printf("Create List first ,List is Empty.\n");
+    else if(head->next==NULL)
+        printf("One node list you can perform insertion at beginning and end\n");
+    else{
+        printf("Enter the position where you want to enter the node : ");
+        scanf("%d",&pos);
+        printf("Enter new_node data : ");
+        scanf("%d",&new_node->data);
+        temp=head;
+        for(int i=1;i<pos;i++){
+            temp2=temp->next;
+            if(temp==NULL){
+                printf("NO SUCH POSITION\n");
+                return;
+            }
+        }
+        new_node->prev=temp;
+        new_node->next=temp2;
+        temp->next=new_node;
+        temp2->prev=new_node;
+    }
+}
+
+void insertAtBeg(){
+    int data;
+    struct node *new_node;
+    new_node=(struct node *)malloc(sizeof(struct node));
+    printf("Enter new_node data : ");
+    scanf("%d",&new_node->data);
+    new_node->prev=NULL;
+    new_node->next=NULL;
+    if(head==NULL){
+        head=new_node;
+        tail=new_node;
+    }
+    else{
+        new_node->next=head;
+        head->prev=new_node;
+        head=new_node;
+    }
+}
+
+void display(){
+    struct node *temp;
+    temp=head;
+    if(head==NULL)
+        printf("List is Empty,Create List First.\n");
+    else{
+            printf("The lists is :\n");
+            while(temp!=NULL){
+            printf("%d ",temp->data);
+            temp=temp->next;
+            }
+        printf("\n");
+    }
+}
+int main(){
+    int choice;
+    while(1){
+        printf("1. Create List\n2. Insert At Position\n3. display\n4. Exit\n");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:insertAtBeg();
+                break;
+            case 2:insertAtPosition();
+                break;
+            case 3:display();
+                break;
+            case 4: exit(0);
+            default:printf("You Entered wrong choice....\n");
+                break;
+        }
+    }
+    return 0;
+}
