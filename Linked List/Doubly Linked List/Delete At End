@@ -61,7 +61,7 @@ void display(){
 int main(){
     int choice;
     while(1){
-        printf("1. Insert At End\n2. Delete At Beginning\n3. display\n4. Exit\n");
+        printf("1. Insert At End\n2. Delete At End\n3. display\n4. Exit\n");
         scanf("%d",&choice);
         switch(choice){
             case 1:insertAtEnd();
