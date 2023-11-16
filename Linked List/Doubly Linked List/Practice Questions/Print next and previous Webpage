@@ -1,0 +1,97 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct page{
+    int num;
+    struct page *next;
+    struct page *prev;
+};
+
+struct page *head,*tail,*current;
+
+void InsertAtEnd(){
+    struct page *new_page;
+    new_page=(struct page *)malloc(sizeof(struct page));
+    
+    printf("Insert new page : ");
+    scanf("%d",&new_page->num);
+    new_page->prev=NULL;
+    new_page->next=NULL;
+    if(head==NULL){
+        head=new_page;
+        tail=new_page;
+    }
+    else{
+        tail->next=new_page;
+        new_page->prev=tail;
+        tail=new_page;
+    }
+    
+}
+
+void Display(){
+    struct page *temp;
+    temp=head;
+    if(head==NULL)
+        printf("Create Webpages first,There is no page in the list \n");
+    else{
+        while(temp!=NULL){
+            printf("%d ",temp->num);
+            temp=temp->next;
+        }
+        printf("\n");
+    }
+}
+
+void previous(){
+    if(current->prev==NULL)
+    {
+        printf("No previous Page\n");
+        return;
+    }
+    current=current->prev;
+    printf("Previous page : %d\n",current->num);
+    
+}
+
+void currentPage(){
+    if(current==NULL)
+        current=head;
+    printf("Current Page : %d\n",current->num);
+}
+
+void next(){
+    if(current->next==NULL){
+        printf("No Next page \n");
+        return ;
+    }
+    current=current->next;
+    printf("Next page : %d\n",current->num);
+}
+
+int main(){
+    
+    int choice;
+    
+    while(1){
+        printf("1. Create new page\n2. Display Webpages\n3. previous page\n4. current page \n5. next page\n6. Exit\n");
+        printf("Enter your choice : ");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1: InsertAtEnd();
+                break;
+            case 2: Display();
+                break;
+            case 3: previous();
+                break;
+            case 4: currentPage();
+                break;
+            case 5: next();
+                break;
+            case 6: exit(0);
+            default: printf("You entered wrong choice \n");
+        }
+    }
+    return 0;
+}
+
