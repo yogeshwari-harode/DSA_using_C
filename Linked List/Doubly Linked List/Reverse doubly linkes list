@@ -1,0 +1,90 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+  int data;
+  struct node *prev;
+  struct node *next;
+};
+
+struct node *head,*tail;
+
+void deleteAtEnd(){
+    if(head==NULL){
+        printf("Create List First/n");
+    }
+    else if(head->next==NULL){
+        free(head);
+        head=NULL;
+    }
+    else{
+        tail=tail->prev;
+        free(tail->next);
+        tail->next=NULL;
+    }
+}
+
+void insertAtEnd(){
+    int data;
+    struct node *new_node;
+    new_node=(struct node *)malloc(sizeof(struct node));
+    printf("Enter new_node data : ");
+    scanf("%d",&new_node->data);
+    new_node->prev=NULL;
+    new_node->next=NULL;
+    if(head==NULL){
+        head=new_node;
+        tail=new_node;
+    }
+    else{
+        tail->next=new_node;
+        new_node->prev=tail;
+        tail=new_node;
+    }
+}
+
+void Reverse(){
+    
+    do{
+        printf("%d ",tail->data);
+        tail=tail->prev;
+    }while(tail->prev!=NULL);
+    printf("%d",tail->data);
+}
+
+void display(){
+    struct node *temp;
+    temp=head;
+    if(head==NULL)
+        printf("List is Empty,Create List First.\n");
+    else{
+            printf("The lists is :\n");
+            while(temp!=NULL){
+            printf("%d ",temp->data);
+            temp=temp->next;
+            }
+        printf("\n");
+    }
+}
+
+int main(){
+    int choice;
+    while(1){
+        printf("1. Insert At End\n2. Delete At End\n3. display\n4. Reverse List\n5. Exit\n");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:insertAtEnd();
+                break;
+            case 2:deleteAtEnd();
+                break;
+            case 3:display();
+                break;
+            case 4: Reverse();
+            case 5: exit(0);
+            
+            default:printf("You Entered wrong choice....\n");
+                break;
+        }
+    }
+    return 0;
+}
