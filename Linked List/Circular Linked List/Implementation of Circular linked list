@@ -1,0 +1,184 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node* next;
+};
+
+struct node* tail, *temp, *new_node;
+
+void insertAtBeg() {
+    new_node = (struct node*)malloc(sizeof(struct node));
+    printf("Enter new node data : ");
+    scanf("%d", &new_node->data);
+    new_node->next = NULL;
+
+    if (tail == NULL) {
+        tail = new_node;
+        tail->next = tail; // For a circular list, the next of the new node should point back to itself.
+    } else {
+        new_node->next = tail->next;
+        tail->next = new_node;
+    }
+}
+
+void insertAtEnd() {
+    new_node = (struct node*)malloc(sizeof(struct node));
+    printf("Enter new node data : ");
+    scanf("%d", &new_node->data);
+    new_node->next = NULL;
+
+    if (tail == NULL) {
+        tail = new_node;
+        tail->next = tail; // For a circular list, the next of the new node should point back to itself.
+    } else {
+        new_node->next = tail->next;
+        tail->next = new_node;
+        tail = new_node; // Update tail to point to the new node.
+    }
+}
+
+void InsertAtPosition() {
+    struct node* new_node, *temp;
+    new_node = (struct node*)malloc(sizeof(struct node));
+    int i, pos;
+
+    if (tail == NULL)
+        printf("Create List First, List is Empty\n");
+    else {
+        printf("Enter new_node data: ");
+        scanf("%d", &new_node->data);
+        printf("Enter the position : ");
+        scanf("%d", &pos);
+
+        if (pos == 1) {
+            new_node->next = tail->next;
+            tail->next = new_node;
+        } else {
+            temp = tail->next;
+            for (i = 1; i < (pos - 1); i++) {
+                temp = temp->next;
+                if (temp == tail->next)
+                    printf("No Such position\n");
+            }
+            new_node->next = temp->next;
+            temp->next = new_node;
+            if (new_node->next == tail->next) // Update tail if the new node is inserted at the end.
+                tail = new_node;
+        }
+    }
+}
+
+void DeleteAtBeg() {
+    struct node* temp;
+    if (tail == NULL)
+        printf("Empty List\n");
+    else {
+        temp = tail->next;
+        if (temp == tail) {
+            free(temp);
+            tail = NULL;
+        } else {
+            tail->next = temp->next;
+            free(temp);
+        }
+    }
+}
+
+void DeleteAtEnd() {
+    struct node* pre_temp, *temp;
+    if (tail == NULL)
+        printf("Empty List\n");
+    else if (tail->next == tail) {
+        free(tail);
+        tail = NULL;
+    } else {
+        temp = tail->next;
+        while (temp->next != tail) {
+            temp = temp->next;
+        }
+        temp->next = tail->next;
+        free(tail);
+        tail = temp; // Update tail to the last node.
+    }
+}
+
+void DeleteAtPosition() {
+    struct node* temp, *pre_temp;
+
+    int i, pos;
+
+    if (tail == NULL)
+        printf("Create List First, List is Empty\n");
+    else {
+        printf("Enter the position : ");
+        scanf("%d", &pos);
+
+        if (pos == 1) {
+            temp = tail->next;
+            tail->next = temp->next;
+            if (temp == tail)
+                tail = NULL; // Update tail if the only node is deleted.
+            free(temp);
+        } else {
+            temp = tail->next;
+            for (i = 1; i < pos; i++) {
+                pre_temp = temp;
+                temp = temp->next;
+                if (temp == tail->next) {
+                    printf("No Such position\n");
+                    return;
+                }
+            }
+            pre_temp->next = temp->next;
+            if (temp == tail)
+                tail = pre_temp; // Update tail if the last node is deleted.
+            free(temp);
+        }
+    }
+}
+
+void Display() {
+    temp = tail;
+    if (tail == NULL) {
+        printf("List is empty\n");
+    } else {
+        do {
+            temp = temp->next;
+            printf("%d ", temp->data);
+        } while (temp != tail);
+    }
+}
+
+int main() {
+    int choice;
+    while (1) {
+        printf("\n1. Insert At Beginning\n2. Insert At End\n3. Insert At Position\n4. Delete At Beg\n5. Delete At End\n6. Delete At Position\n7. Display\n8. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: insertAtBeg();
+                break;
+            case 2: insertAtEnd();
+                break;
+            case 3: InsertAtPosition();
+                break;
+            case 4: DeleteAtBeg();
+                break;
+            case 5: DeleteAtEnd();
+                break;
+            case 6: DeleteAtPosition();
+                break;
+            case 7: Display();
+                break;
+            case 8:
+                exit(0);
+            default:
+                printf("Invalid choice\n");
+                break;
+        }
+    }
+    return 0;
+}
