@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+  int data;
+  struct node *prev;
+  struct node *next;
+};
+
+struct node *head, *tail;
+
+void insertAtBeg() {
+    int data;
+    struct node *new_node;
+    new_node = (struct node *)malloc(sizeof(struct node));
+    printf("Enter new_node data : ");
+    scanf("%d", &new_node->data);
+    new_node->prev = NULL;
+    new_node->next = NULL;
+
+    if (head == NULL) {
+        head = new_node;
+        tail = new_node;
+        head->next = tail; // Make it circular
+        tail->prev = head; // Make it circular
+    } else {
+        new_node->next = head;
+        head->prev = new_node;
+        head = new_node;
+        head->prev = tail; // Make it circular
+        tail->next = head; // Make it circular
+    }
+}
+
+void display() {
+    struct node *temp;
+    temp = head;
+    if (head == NULL)
+        printf("List is Empty, Create List First.\n");
+    else {
+        printf("The list is :\n");
+        do {
+            printf("%d ", temp->data);
+            temp = temp->next;
+        } while (temp != head); // Continue until you reach the head again
+        printf("\n");
+    }
+}
+
+int main() {
+    int choice;
+    while (1) {
+        printf("1. Insert At Beginning\n2. Display\n3. Exit\n");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                insertAtBeg();
+                break;
+            case 2:
+                display();
+                break;
+            case 3:
+                exit(0);
+            default:
+                printf("You Entered wrong choice....\n");
+                break;
+        }
+    }
+    return 0;
+}
